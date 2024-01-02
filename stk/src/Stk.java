@@ -1,6 +1,6 @@
 class Stk
 {
-    public final int[] arr;
+    public int[] arr;
     public int top;
     public int capacity;
     Stk(int size)
@@ -14,7 +14,8 @@ public void push(int x)
     if(isFull())
     {
         System.out.println("Stack is full!");
-        System.exit(1);
+        expandArray();
+        System.out.println("Stack expanded");
     }
     else
     {
@@ -40,6 +41,18 @@ public boolean isFull()
 {
     return top==capacity-1;
 }
+public void expandArray()
+{
+    int curr_size = top+1;
+    int[] new_array = new int[curr_size*2];
+    for ( int i=0 ; i < curr_size; i++ )
+    {
+        new_array[i] = arr[i];
+
+    }
+    arr = new_array;
+    capacity = new_array.length;
+}
 public boolean isEmpty()
 {
     return top == -1;
@@ -53,7 +66,7 @@ public void printStk()
 }
 public static void main(String[] args)
 {
-    Stk stack = new Stk(8);
+    Stk stack = new Stk(5);
 
     stack.push(9);
     stack.push(2);
@@ -71,6 +84,13 @@ public static void main(String[] args)
     stack.push(7);
     System.out.println(("Stack: "));
     stack.printStk();
+    System.out.println();
+    System.out.println("Stack dynamically implemented successfully.");
 
 }
+
+
+
+
+
 }
