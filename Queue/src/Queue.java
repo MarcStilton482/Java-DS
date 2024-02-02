@@ -1,78 +1,75 @@
-public class Queue
-{
-    public int capacity;
-    public int[] arr;
-    public int head ;
-    public int tail ;
+public class Queue{
+    public static int front, rear , capacity;
+    static int[] queue;
     Queue(int size)
     {
-        head = tail = 0;
+        front = rear = 0;
         capacity = size;
-        arr = new int[capacity];
+        queue = new int[capacity];
     }
-    void Enqueue(int x)
+    static  void  enqueue(int item)
     {
-        if(capacity==tail)
+        if(capacity == rear)
         {
-            System.out.println(("Queue is Full"));
+            System.out.println("Queue is Full");
         }
         else
         {
-            arr[tail] = x;
-            tail++;
+            queue[rear] = item;
+            rear++;
         }
-
     }
-    void Dequeue()
+    static void dequeue()
     {
-        if(head==tail)
+        if(front == rear)
         {
             System.out.println("Queue is empty");
         }
         else
         {
-            for(int i = 0; i < tail-1 ;i++)
+            for(int i = 0; i < rear-1; i++ )
             {
-                arr[i] = arr [i+1];
+                queue[i] = queue[i+1];
             }
         }
-        if(tail<capacity)
-        {
-            arr[tail] = 0;
-            tail--;
+        if(rear < capacity) {
+            queue[rear] = 0;
+            rear--;
         }
     }
-    void display()
+    static void display()
     {
-        if(head==tail)
+        int i;
+        if(front == rear)
         {
             System.out.println("Queue is empty");
-
         }
-        else
+        for(i = front; i < rear; i++)
         {
-
-            for(int i = head; i<tail;i++)
-            {
-                System.out.println(arr[i]);
-            }
+            System.out.println(queue[i]);
         }
+    }
+    static void qfront()
+    {
+        if(front == rear)
+        {
+            System.out.println("Queue is empty");
+        }
+        System.out.println("Front element is: "+queue[front]);
     }
     public static void main(String[] args)
     {
-        Queue q = new Queue(7);
-        System.out.println("Before any operation performed.");
-        q.display();
-        q.Enqueue(3);
-        q.Enqueue(2);
-        q.Enqueue(4);
-        q.Enqueue(6);
-        q.Enqueue(1);
-        System.out.println("After En-queuing: ");
-        q.display();
-        q.Dequeue();
-        q.Dequeue();
-        System.out.println("After De-queuing: ");
-        q.display();
+        Queue q  = new Queue(7);
+        enqueue(3);
+        enqueue(4);
+        enqueue(6);
+        enqueue(9);
+        enqueue(1);
+        display();
+        dequeue();
+        enqueue(8);
+        display();
+        qfront();
+
     }
 }
