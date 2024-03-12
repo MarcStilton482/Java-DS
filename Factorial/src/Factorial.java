@@ -1,18 +1,20 @@
 import java.util.Scanner;
 public class Factorial {
-    public static int Factorial(int k)
+    public static int Factorial(int number)
     {
-        if (k == 1)
+        if (number == 1)
             return 1;
         else
-            return k*Factorial(k-1);
+            return number *Factorial(number -1);
     }
     public static void main(String[] args)
     {
         Scanner sc = new Scanner(System.in);
-        int n;
+        int num;
         System.out.println("Enter a positive number whose factorial need to be find: ");
-        n = sc.nextInt();
-        System.out.printf("Factorial of number "+n+" is: "+Factorial(n));
+        num = sc.nextInt();
+        System.out.printf("Factorial of number "+ num +" is: "+Factorial(num));
     }
 }
+
+//Space Complexity - O(n), Time Complexity - O(n)
