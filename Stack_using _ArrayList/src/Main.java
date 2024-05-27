@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 
-class Stk {
+class StackDemo {
     private ArrayList<Integer> arr;
 
-    Stk() {
+    StackDemo() {
         arr = new ArrayList<>();
     }
 
-    public void push(int x) {
-        arr.add(x);
+    public void push(int element) {
+        arr.add(element);
     }
 
     public int pop() {
-        if (isEmpty()) {
+        if (Stack_isEmpty()) {
             System.out.println("Underflow!");
             System.exit(1);
         }
@@ -23,7 +23,7 @@ class Stk {
         return arr.size();
     }
 
-    public boolean isEmpty() {
+    public boolean Stack_isEmpty() {
         return arr.isEmpty();
     }
 
@@ -35,7 +35,7 @@ class Stk {
     }
 
     public static void main(String[] args) {
-        Stk stack = new Stk();
+        StackDemo stack = new StackDemo();
 
         stack.push(9);
         stack.push(2);

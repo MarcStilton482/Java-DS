@@ -10,16 +10,15 @@ class ReverseStack {
     }
 
     public void push(int element) {
-        if (isFull()) {
+        if (stackIsFull()) {
             expandArray();
         }
         stackArray[++topIndex] = element;
     }
 
     public int pop() {
-        if (isEmpty()) {
-            System.out.println("Underflow!");
-            System.exit(1);
+        if (stackIsEmpty()) {
+            throw new StackUnderflowException("Stack Underflow! Can't pop from an empty Stack.");
         }
         return stackArray[topIndex--];
     }
@@ -28,7 +27,7 @@ class ReverseStack {
         return topIndex + 1;
     }
 
-    public boolean isFull() {
+    public boolean stackIsFull() {
         return topIndex == stackCapacity - 1;
     }
 
@@ -48,7 +47,7 @@ class ReverseStack {
         destination[n - 1] = source[n - 1];
     }
 
-    public boolean isEmpty() {
+    public boolean stackIsEmpty() {
         return topIndex == -1;
     }
 
@@ -61,7 +60,7 @@ class ReverseStack {
     static ReverseStack stack = new ReverseStack();
 
     static void insertAtBottom(int item) {
-        if (stack.isEmpty()) {
+        if (stack.stackIsEmpty()) {
             stack.push(item);
         } else {
             int element = stack.pop();
@@ -71,7 +70,7 @@ class ReverseStack {
     }
 
     static void reverse() {
-        if (!stack.isEmpty()) {
+        if (!stack.stackIsEmpty()) {
             int element = stack.pop();
             reverse();
             insertAtBottom(element);
@@ -79,19 +78,33 @@ class ReverseStack {
     }
 
     public static void main(String[] args) {
-        stack.push(5);
-        stack.push(7);
-        System.out.println("Stack size: " + stack.getStackSize());
-        System.out.println();
-        stack.push(6);
-        stack.push(4);
-        stack.push(2);
-        stack.pop();
-        stack.printStackElements();
-        System.out.println();
-        stack.push(1);
-        reverse();
-        stack.printStackElements();
-        System.out.println();
+        try
+        {
+            stack.push(5);
+            stack.push(7);
+            System.out.println("Stack size: " + stack.getStackSize());
+            System.out.println();
+            stack.push(6);
+            stack.push(4);
+            stack.push(2);
+            stack.pop();
+            stack.printStackElements();
+            System.out.println();
+            stack.push(1);
+            reverse();
+            stack.printStackElements();
+            System.out.println();
+        }
+        catch (StackUnderflowException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+class StackUnderflowException extends RuntimeException
+{
+    public StackUnderflowException(String message)
+    {
+        super(message);
     }
 }
