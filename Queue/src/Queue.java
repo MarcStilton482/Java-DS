@@ -1,17 +1,17 @@
 public class Queue{
     public static int front, rear , capacity;
     static int[] queue;
-    Queue(int size)
+    Queue()
     {
         front = rear = 0;
-        capacity = size;
+        capacity = 7;
         queue = new int[capacity];
     }
     static  void  enqueue(int item)
     {
         if(capacity == rear)
         {
-            System.out.println("Queue is Full");
+           throw new QueueOverflowException("Queue Overflow! Can't enqueue any more elements.");
         }
         else
         {
@@ -23,7 +23,7 @@ public class Queue{
     {
         if(front == rear)
         {
-            System.out.println("Queue is empty");
+            throw new QueueUnderflowException("Queue Underflow! Can't dequeue elements from an empty queue.");
         }
         else
         {
@@ -39,17 +39,19 @@ public class Queue{
     }
     static void display()
     {
-        int i;
+        int element;
         if(front == rear)
         {
             System.out.println("Queue is empty");
         }
-        for(i = front; i < rear; i++)
+        System.out.println("Elements in Queue: ");
+        for(element = front; element < rear; element++)
         {
-            System.out.println(queue[i]);
+            System.out.println(queue[element]);
         }
+        System.out.println();
     }
-    static void qfront()
+    static void elementAtFront()
     {
         if(front == rear)
         {
@@ -59,17 +61,38 @@ public class Queue{
     }
     public static void main(String[] args)
     {
-        Queue q  = new Queue(7);
-        enqueue(3);
-        enqueue(4);
-        enqueue(6);
-        enqueue(9);
-        enqueue(1);
-        display();
-        dequeue();
-        enqueue(8);
-        display();
-        qfront();
+        Queue queue  = new Queue();
+        try
+        {
+            enqueue(3);
+            enqueue(4);
+            enqueue(6);
+            enqueue(9);
+            enqueue(1);
+            display();
+            dequeue();
+            enqueue(8);
+            display();
+            elementAtFront();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
 
+    }
+}
+class QueueOverflowException extends RuntimeException
+{
+    public  QueueOverflowException(String message)
+    {
+        super(message);
+    }
+}
+class QueueUnderflowException extends RuntimeException
+{
+    public  QueueUnderflowException(String message)
+    {
+        super(message);
     }
 }
