@@ -3,15 +3,18 @@ class Node {
     int priority;
     Node next;
 
+
     Node(int data, int priority) {
         this.data = data;
         this.priority = priority;
         this.next = null;
+
     }
 }
 
 public class PriorityQueue {
     private Node front;
+    int size = 0 ;
 
     public PriorityQueue() {
         front = null;
@@ -31,32 +34,49 @@ public class PriorityQueue {
             newNode.next = temp.next;
             temp.next = newNode;
         }
+        size++;
     }
 
     public int dequeue() {
-        if (isEmpty()) {
+        if (QueueIsEmpty()) {
             throw new IllegalStateException("PriorityQueue is empty");
         }
         int data = front.data;
         front = front.next;
+        size--;
         return data;
+
+    }
+    public int getSize()
+    {
+        return size;
     }
 
-    public boolean isEmpty() {
+    public boolean QueueIsEmpty() {
         return front == null;
     }
 
     public static void main(String[] args) {
-        PriorityQueue pq = new PriorityQueue();
+        PriorityQueue queue = new PriorityQueue();
 
-        pq.enqueue(5, 2);
-        pq.enqueue(6, 1);
-        pq.enqueue(7, 3);
-        pq.enqueue(8, 2);
-        pq.enqueue(1,5);
-
-        while (!pq.isEmpty()) {
-            System.out.println(pq.dequeue());
+        try
+        {
+            queue.enqueue(5, 2);
+            queue.enqueue(6, 1);
+            queue.enqueue(7, 3);
+            System.out.println("Size of Priority Queue till now:"+ queue.getSize());
+            System.out.println();
+            queue.enqueue(8, 2);
+            queue.enqueue(1, 5);
+            queue.dequeue();
+            System.out.println("Displaying Priority Queue elements: ");
+            while (!queue.QueueIsEmpty()) {
+                System.out.println(queue.dequeue());
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
         }
     }
 }
