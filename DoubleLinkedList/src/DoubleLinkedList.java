@@ -2,20 +2,20 @@ class Node
 {
     int data;
     Node next;
-    Node prev;
+    Node previous;
     public Node (int data)
     {
         this.data = data;
         this.next = null;
-        this.prev = null;
+        this.previous = null;
     }
 
 
 }
-public class Dll {
+public class DoubleLinkedList {
     public static Node head = null;
     public static Node tail = null;
-    public void travFor()
+    public void traverseForward()
     {
         Node current = head;
         System.out.println("Forward Traversal: ");
@@ -28,20 +28,20 @@ public class Dll {
         System.out.println();
 
     }
-    public void travRev()
+    public void traverseReverse()
     {
         Node current = tail;
         System.out.println("Reverse Traversal: ");
         while(current != null)
         {
             System.out.println(current.data+" ");
-            current = current.prev;
+            current = current.previous;
         }
         System.out.print("Null");
         System.out.println();
 
     }
-    public void insertBeg(int data)
+    public void insertAtBeginning(int data)
     {
         Node temp = new Node(data);
         if(head == null)
@@ -52,11 +52,11 @@ public class Dll {
         else
         {
             temp.next = head;
-            head.prev = temp;
+            head.previous = temp;
             head = temp;
         }
     }
-    public void insertEnd(int data)
+    public void insertAtEnd(int data)
     {
         Node temp = new Node(data);
         if(tail == null)
@@ -67,16 +67,16 @@ public class Dll {
         else
         {
             tail.next = temp;
-            temp.prev = tail;
+            temp.previous = tail;
             tail = temp;
         }
     }
-    public void insertatPos(int data, int pos)
+    public void insertAtPosition(int data, int pos)
     {
         Node temp = new Node(data);
         if (pos == 1 )
         {
-            insertBeg(data);
+            insertAtBeginning(data);
         }
         else
         {
@@ -89,22 +89,23 @@ public class Dll {
             }
             if(current== null)
             {
-                insertEnd(data);
+                insertAtEnd(data);
             }
             else
             {
                 temp.next = current;
-                temp.prev = current.prev;
-                current.prev.next = temp;
-                current.prev = temp;
+                temp.previous = current.previous;
+                current.previous.next = temp;
+                current.previous = temp;
             }
         }
     }
-    public void delAtBeg()
+    public void deleteAtBeginning()
     {
         if(head == null)
         {
-            return;
+            throw new NullPointerException("No element is present to carry out deletion operation at beginning");
+
         }
         if (head == tail)
         {
@@ -114,14 +115,14 @@ public class Dll {
         }
         Node temp = head;
         head = head.next;
-        head.prev = null;
+        head.previous = null;
         temp.next = null;
     }
-    public void delAtEnd()
+    public void deleteAtEnd()
     {
         if(tail == null)
         {
-            return;
+            throw new NullPointerException("No element is present to carry out deletion operation at end");
         }
         if (head == tail)
         {
@@ -130,11 +131,11 @@ public class Dll {
             return;
         }
         Node temp = tail;
-        tail = tail.prev;
+        tail = tail.previous;
         tail.next = null;
-        temp.prev = null;
+        temp.previous = null;
     }
-    public void del(int pos)
+    public void deleteAtPosition(int pos)
     {
         if(head == null)
         {
@@ -142,7 +143,7 @@ public class Dll {
         }
         if(pos == 1)
         {
-            delAtBeg();
+            deleteAtBeginning();
             return;
         }
         Node current = head;
@@ -154,19 +155,19 @@ public class Dll {
         }
         if(current == null)
         {
-            System.out.println("Wrong Position");
-            return;
+            throw new NullPointerException("Wrong Position entered.");
+
         }
         if(current == tail){
-            delAtEnd();
+            deleteAtEnd();
             return;
         }
-        current.prev.next = current.next;
-        current.next.prev = current.prev;
-        current.prev = null;
+        current.previous.next = current.next;
+        current.next.previous = current.previous;
+        current.previous = null;
         current.next = null;
     }
-    public  void display(Node head)
+    public  void displayDoubleLinkedList(Node head)
     {
         Node temp = head;
         while(temp != null) {
@@ -180,29 +181,31 @@ public class Dll {
     }
     public static void main(String[] args)
     {
-        Dll list = new Dll();
-        list.insertEnd(2);
-        list.insertEnd(5);
-        list.insertEnd(1);
-        list.insertEnd(4);
-        list.travRev();
-        list.insertEnd(9);
-        list.display(head);
-        list.insertBeg(9);
-        list.insertatPos(12,3);
-        list.display(head);
-        list.del(2);
-        list.display(head);
-        list.delAtEnd();
-        list.travFor();
-        list.delAtBeg();
-        list.display(head);
-        list.del(5);
-        list.display(head);
-
-
-
-
+        try
+        {
+            DoubleLinkedList list = new DoubleLinkedList();
+            list.insertAtEnd(2);
+            list.insertAtEnd(5);
+            list.insertAtEnd(1);
+            list.insertAtEnd(4);
+            list.traverseReverse();
+            list.insertAtEnd(9);
+            list.displayDoubleLinkedList(head);
+            list.insertAtBeginning(9);
+            list.insertAtPosition(12, 3);
+            list.displayDoubleLinkedList(head);
+            list.displayDoubleLinkedList(head);
+            list.deleteAtEnd();
+            list.traverseForward();
+            list.deleteAtBeginning();
+            list.displayDoubleLinkedList(head);
+            list.deleteAtPosition(5);
+            list.displayDoubleLinkedList(head);
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
 
     }
 }
